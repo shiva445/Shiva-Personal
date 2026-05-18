@@ -1,0 +1,26 @@
+<aura:component implements="lightning:isUrlAddressable,lightning:actionOverride,force:lightningQuickActionWithoutHeader,force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,lightning:availableForFlowScreens" controller="LightningDataTableController">
+    <aura:attribute name="mydata" type="Object"/>
+    <aura:attribute name="mycolumns" type="List"/>
+    <aura:attribute name="errors" type="Object" default="[]"/>
+    <aura:attribute name="draftValues" type="Object" default="[]"/>
+ 	<aura:attribute name="sortedBy"
+                type="String" />
+	<aura:attribute name="sortedDirection"
+                type="Boolean"
+                default="true" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <lightning:datatable data="{! v.mydata }" 
+        columns="{! v.mycolumns }" 
+        keyField="Id"
+        errors="{! v.errors }"
+        draftValues="{! v.draftValues }"
+        onsave="{! c.handleSaveEdition }"
+        sortedBy="{!v.sortedBy}"
+        sortedDirection="{!v.sortedDirection}"
+        onsort="{!c.updateColumnSorting}"
+                         
+    />
+    
+</aura:component>

@@ -1,0 +1,8 @@
+<aura:component >
+	<aura:registerEvent name="statusUpdateEvent" type="c:updateStatus"/>
+    <aura:method name="callChild" action="{!c.callChildMethod}" />
+    <aura:attribute name="childStatus" type="String" default="Completed"/>
+    This is in Child Component and the Status is {!v.childStatus}
+    
+    <lightning:button label="Update Status to Parent" onclick="{!c.handleClick}" />
+</aura:component>

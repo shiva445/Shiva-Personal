@@ -1,0 +1,13 @@
+<aura:component controller="FileUploaderChunkBitBucket">
+	
+
+    
+    <aura:attribute name="parentId" type="Id"  />
+    <aura:attribute name="error" type="string"  />
+    
+    <aura:registerEvent name="fileEvent" type="c:FileEvent"/>
+    <lightning:input aura:id="fileId" onchange="{!c.handleFilesChange}" type="file" name="file" label="Files"
+                     accept=".pdf, .png, .docx, .xlsx, .JPG" multiple="true"/>
+    <div class="slds-form-element__help slds-hide" aria-live="assertive" aura:id="errorDiv">{!v.error}</div>
+    
+</aura:component>

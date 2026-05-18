@@ -1,0 +1,19 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+ 	
+    <aura:attribute access="global" name="recordId" type="Id" description="Record to which the files should be attached" default="003f400000Nj3fg"/>
+    <aura:attribute access="global" name="maxDate" type="String"/>
+    <!--<lightning:fileUpload label="Add attachment" multiple="true" accept=".pdf, .png, .docx, .xlsx, .JPG" recordId="003f400000Nj3fg" onuploadfinished="{!c.handleUploadFinished}"/>
+	-->
+    <!--<lightning:input aura:id="fileId" accept= '.pdf, .png, .docx, .xlsx, .JPG'
+                 onchange="{!c.validateAndContinue}" 
+                 type="file" 
+                 name="file" 
+                 label="Upload" 
+                 multiple="false"/>                                                
+    -->
+    
+    <lightning:input aura:Id="inputDate" type="date" value="" max="{!v.maxDate}" variant="standard"/>
+    <lightning:button onclick="{!c.handleSave}" class="slds-m-right_medium slds-theme_brand brandButton" iconPosition="left" variant="brand" type="button" label="Save"></lightning:button>
+    
+    
+</aura:component>

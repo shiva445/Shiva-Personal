@@ -1,0 +1,35 @@
+<apex:page controller="MyFirstPageController" >
+    
+    <script>
+        function handleChangeNameOnClick(){
+            
+            var otValue = document.getElementById("{!$Component.frm.ot1}").innerHTML;
+            if(otValue=='Yshu'){
+                otValue="Pinky";
+            }else{
+                otValue="Yshu";
+            }
+            
+            //document.getElementById("{!$Component.frm.ot1}").innerHTML= otValue;
+            document.getElementById("{!$Component.frm.ot1}").style.color='red';
+            
+        }
+    
+    </script>
+    
+    <apex:form id="frm">
+        
+    
+        My name is <apex:outputText id="ot1" styleClass="opVar" style="margin-left:5px;" value="{!outputValueVariable}"></apex:outputText>
+        <br/>
+        My name is <apex:outputText id="ot2" styleClass="opVar" style="margin-left:5px;" value="{!outputValueVariable}"></apex:outputText>
+        <br/>
+        
+    
+    
+    <apex:commandButton value="Change Name" reRender="ot1"  action="{!changeName}" oncomplete="handleChangeNameOnClick()"/>
+    
+    
+    </apex:form>
+  
+</apex:page>

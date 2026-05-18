@@ -1,0 +1,22 @@
+<aura:component implements="lightning:isUrlAddressable,lightning:actionOverride,force:lightningQuickActionWithoutHeader,force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,lightning:availableForFlowScreens">
+	
+    <aura:handler name="statusUpdateEvent" event="c:updateStatus" action="{!c.updateStatusHandler}"/>
+    
+    
+    <aura:attribute name="ChildStatus" type="String" default="In Progress"/>
+    
+    <div class="slds-p-around_large">
+    	This is in Parent Component, Child status is {!v.ChildStatus}
+        <lightning:button label="Send Status to Child" onclick="{!c.handleParentButtonClick}" />
+    </div>
+    
+    
+    <div class="slds-p-around_xx-large">
+    	<p><c:ChildComponent aura:id="childComp"/></p>
+        <p><c:ChildComponent aura:id="childComp1"/></p>
+        <p><c:ChildComponent aura:id="childComp2"/></p>
+        <p><c:ChildComponent aura:id="childComp3"/></p>
+    </div>
+    
+    
+</aura:component>

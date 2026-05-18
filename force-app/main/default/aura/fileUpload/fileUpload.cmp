@@ -1,0 +1,78 @@
+<aura:component controller="FileController">
+    <aura:attribute name="parentId" type="Id"/>
+    
+    <aura:handler event="aura:waiting" action="{!c.waiting}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.doneWaiting}"/>
+    <!--This is similar to action tag on VF page tag-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!-- Display list of existing attachments-->
+    <aura:attribute name="AttachmentFiles" type="Attachment[]" />
+    <aura:method name="RefreshAttachments" action="{!c.doInit}" description="method for rendered list after add/delete attachments"/>
+    
+    <div class="container">
+        <div class="slds-page-header">
+            <h1 class="slds-page-header__title">Attachments</h1>
+            <!--<p class="slds-text-body_small slds-line-height_reset"></p>-->
+        </div>
+        
+        <table class="slds-table slds-table_bordered slds-table_cell-buffer"> 
+        <thead>
+            <tr class="slds-text-title_caps">
+                <th scope="col">
+                    <div class="slds-truncate">S.No</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Name">Name</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate slds-align_absolute-center" title="Actions">Actions</div>
+                </th>
+            </tr>
+        </thead>   
+        <tbody>
+           <!--Iterate the child Component for display Table rows 
+               with pass the List Item Index for track the Every child Component 
+               and pass each List Contact Instance -->         
+            <aura:iteration items="{!v.AttachmentFiles}" var="ath" indexVar="index">
+                
+            	
+                <tr class="slds-text-title_caps">
+                    <td> 
+                        {!index + 1}
+                    </td>
+                    
+                    <td data-label="Name">
+                        <div class="slds-truncate" >{!ath.Name}</div>
+                        <div stype="display:hidden">{!ath.Id}</div>
+                    </td>
+                    
+                    <td data-label="">
+                        <div class="slds-truncate" >
+                            <!--
+                            <button id="{!'upd-'+ath.Id}" onclick="{!c.callUpdateRecord}" class="slds-button slds-button_icon" title="Edit Record">
+                                <lightning:icon iconName="action:edit" size="xx-small" alternativeText="Edit"/>
+                                <span class="slds-assistive-text">Edit</span>
+                            </button>-->
+                            <button id="{!'del-'+ath.Id}" onclick="{!c.callDeleteRecord}" class="slds-button slds-button_icon slds-align_absolute-center" title="Delete Record">
+                                <lightning:icon iconName="action:delete" size="xx-small" alternativeText="Delete"/>
+                                <span class="slds-assistive-text">Delete</span>
+                            </button>
+                            
+                        </div>
+                    </td>  
+                </tr>
+            </aura:iteration>
+        </tbody>
+    </table>
+        
+        
+            
+        <input type="file" class="file" aura:id="file" />
+        <ui:button label="Save" press="{!c.save}"/>
+        
+        <div aura:id="uploading" class="notUploading">
+            <!--<img src="/resource/paura__images/loading-gray.gif" alt="uploading" class="small-spinner" />--> Uploading...
+    	</div>
+    </div>
+    
+</aura:component>

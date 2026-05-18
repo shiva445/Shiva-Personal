@@ -1,0 +1,49 @@
+<apex:page standardController="contact" sidebar="false" showHeader="false">
+    
+    <apex:includeScript value="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"/>
+    
+    <chatter:feed entityId="{!$CurrentPage.parameters.Id}" />
+    <apex:form id="frm">
+        <apex:commandButton value="Upload" onclick="uploadFile()" reRender="frm"/>
+        
+    </apex:form>
+    <script>
+        $j = jQuery.noConflict();
+
+        $j(document).ready(function(){
+            $j('#publisherAttachContentPost').trigger('click');
+            $j('#chatterUploadFileAction').trigger('click');
+            $j('.uploadFileSizeLimit').hide();           
+
+            $j('.contentPublisherSlideDown.customPanel.alignTop').css('border', '0');
+
+            $j('.clearContentPanelButtonContainer').hide();
+            
+            $j('.publisherFeedItemTypeChoices').hide();      
+            
+            $j('.cxfeedinnerwrapper').hide();  
+            
+            $j('.publisherBottomBarPlaceholder').hide();
+            
+            $j('.publisherTextAreaPlaceholder.alignCenter').hide();
+            
+            
+            
+        });
+        
+        
+        function uploadFile(){
+            if($j('.file')[1].files.length > 0){
+
+                $j('#publishersharebutton').trigger('click');
+
+            }else{
+            
+                alert('Please select a file');
+            
+            }         
+        
+        }
+        
+    </script>
+</apex:page>

@@ -1,0 +1,3 @@
+<aura:event type="COMPONENT" description="this event is used to update status" >
+    <aura:attribute name="status" type="String"/>
+</aura:event>

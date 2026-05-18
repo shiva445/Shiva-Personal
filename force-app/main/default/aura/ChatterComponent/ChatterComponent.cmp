@@ -1,0 +1,10 @@
+<!--
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    <forceChatter:feed type="Record" subjectId="003f400000Nj3fg"/>
+</aura:component>
+
+-->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    <forceChatter:publisher recordId="003f400000Nj3fg" context="GLOBAL" />
+    <forceChatter:feed type="Record" subjectId="003f400000Nj3fg" />
+</aura:component>

@@ -1,0 +1,29 @@
+<aura:component implements="lightning:isUrlAddressable,lightning:actionOverride,force:lightningQuickActionWithoutHeader,force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,lightning:availableForFlowScreens">
+    <aura:attribute name="yourName" type="String" default="Marc Benioff" description="Using for Store Name"/>
+    
+    <aura:attribute name="truthy1" type="Boolean" default="true"/>
+    <aura:attribute name="truthy2" type="Boolean" default="false"/>
+	<div>
+        
+        
+        
+        <aura:if isTrue="{!v.truthy1}">
+            <lightning:input name="input1" label="Enter some text for One" required="true" value="{!v.yourName}"/>
+           
+        </aura:if> 
+        
+        <aura:if isTrue="{!v.truthy2}">
+            <lightning:input name="input2" label="Enter some text for two" required="true"/>
+            
+        </aura:if>
+        
+        <lightning:button variant="brand" label="Previous action" title="Previous action" onclick="{! c.handleClickPrevious }" />
+        <lightning:button variant="brand" label="Next action" title="Next action" onclick="{! c.handleClickNext }" />
+        <lightning:button variant="brand" label="Refresh View" title="Refresh action" onclick="{! c.handleRefreshView }" />
+        
+        
+        --------------------------
+        <c:ParentComponent ChildStatus="From Parent Component"/>
+        
+    </div>
+</aura:component>

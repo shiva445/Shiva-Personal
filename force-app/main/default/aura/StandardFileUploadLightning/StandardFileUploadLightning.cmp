@@ -1,0 +1,11 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <div>
+    	<lightning:fileUpload label="Attach receipt" 
+    	 name="fileUploader"
+        multiple="true" 
+        accept=".pdf, .png, .jpeg, .jpg"
+        recordId="003f400000Nj3fg" 
+        onuploadfinished="{!c.handleUploadFinished}" />
+    </div>
+    
+</aura:component>

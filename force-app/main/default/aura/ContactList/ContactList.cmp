@@ -1,0 +1,182 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction" access="global" controller="contactListController">
+    <aura:attribute name="parentId" type="Id"/>
+	<!--    
+    <aura:handler event="aura:waiting" action="{!c.waiting}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.doneWaiting}"/>
+	-->
+    
+    <!--This is similar to action tag on VF page tag-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!-- Display list of existing attachments-->
+    <aura:attribute name="ContactFiles" type="contactListController.ContactWrapper[]" />
+    <aura:method name="RefreshContacts" action="{!c.doInit}" description="method for rendered list after add/delete contacts"/>
+    
+    <div class="container">
+        <div class="slds-page-header">
+            <h1 class="slds-page-header__title">Attachments - Files</h1>
+            <!--<p class="slds-text-body_small slds-line-height_reset"></p>-->
+        </div>
+        
+        <table class="slds-table slds-table_bordered slds-table_cell-buffer"> 
+        <thead>
+            <tr class="slds-text-title_caps">
+                <th scope="col">
+                    <div class="slds-truncate">S. No</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Name">Name</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Description">Description</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Attachment Type">Attachment Type</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate slds-align_absolute-center" title="Actions">Actions</div>
+                </th>
+            </tr>
+        </thead>   
+        <tbody>
+           <!--Iterate the child Component for display Table rows 
+               with pass the List Item Index for track the Every child Component 
+               and pass each List Contact Instance -->         
+            <aura:iteration items="{!v.ContactFiles}" var="con" indexVar="index">
+                
+            	
+                <tr class="slds-text-title_caps">
+                    <td> 
+                        {!index + 1}
+                    </td>
+                    
+                    <td data-label="Name">
+                        
+                         <!--<aura:if isTrue="{!empty(con.con.Id)}">-->
+                         <aura:if isTrue="{!con.EditMode}">    
+                             <ui:inputText class="slds-input" value="{!con.con.Name}"/>
+                             <aura:set attribute="else">
+                        		 <div class="slds-truncate" >{!con.con.Name}</div>
+                             </aura:set>
+                         </aura:if>
+                        
+                    </td>
+                    <td data-label="Description">
+                        
+                        
+                        <aura:if isTrue="{!con.EditMode}">
+                             <ui:inputText class="slds-input" value="{!con.con.Description}"/>
+                             <aura:set attribute="else">
+                        		<div class="slds-truncate" >{!con.con.Description}</div>
+                             </aura:set>
+                         </aura:if>
+                        
+                    </td>
+                    <!--
+                    <td data-label="Attachment Type">
+                        
+                        <aura:if isTrue="{!con.EditMode}">
+                             <ui:inputText class="slds-input" value="{!con.con.Title}"/>
+                             <aura:set attribute="else">
+                        		<div class="slds-truncate" >{!con.con.Title}</div>
+                             </aura:set>
+                         </aura:if>
+                    </td>
+                    -->
+                    <td data-label="Created Date">
+                        
+                        <aura:if isTrue="{!con.EditMode}">
+                             
+                            <lightning:input type="date" value="{!con.con.lastmodifieddate}"/>
+                             <aura:set attribute="else">
+                        		<div class="slds-truncate" >{!con.con.lastmodifieddate}</div>
+                             </aura:set>
+                         </aura:if>
+                    </td>
+                    
+                    <td data-label="">
+                        <div class="slds-truncate slds-align_absolute-center" >
+                            <aura:if isTrue="{! !con.EditMode}">
+                                <button data-row-index="{!index}" id="{!'upd-'+con.con.Id}" onclick="{!c.rowEditable}" class="slds-button slds-button_icon" title="Edit Record">
+                                    <lightning:icon iconName="action:edit" size="xx-small" alternativeText="Edit"/>
+                                    <span class="slds-assistive-text">Edit</span>
+                                </button>
+                                <button id="{!'del-'+con.con.Id}" onclick="{!c.callDeleteRecord}" class="slds-button slds-button_icon" title="Delete Record">
+                                    <lightning:icon iconName="action:delete" size="xx-small" alternativeText="Delete"/>
+                                    <span class="slds-assistive-text">Delete</span>
+                                </button>
+                                <button id="{!'ath-'+con.con.Id}" onclick="{!c.callAttachRecord}" class="slds-button slds-button_icon" title="Attach Files">
+                                    <lightning:icon iconName="utility:attach" size="xx-small" alternativeText="Attach"/>
+                                    <span class="slds-assistive-text">Attach</span>
+                                </button>
+                                <aura:set attribute="else">
+                                    <button class="slds-button slds-button_icon" title="Save Attachment">
+                                        <lightning:icon class="green" iconName="utility:save" size="small" alternativeText="Save"/>
+                                        <span class="slds-assistive-text">save</span>
+                                    </button>
+                                    
+                                    <aura:if isTrue="{! empty(con.con.Id)}">
+                                        <button onclick="{!c.deleteContactRow}" data-row-index="{!index}" class="slds-button slds-button_icon" title="Delete Record">
+                                            <lightning:icon iconName="action:delete" size="xx-small" alternativeText="Delete"/>
+                                            <span class="slds-assistive-text">Delete</span>
+                                        </button>
+                                    	<aura:set attribute="else">
+                                            <button onclick="{!c.cancelContactRow}" data-row-index="{!index}" class="slds-button slds-button_icon" title="Delete Record">
+                                            <lightning:icon iconName="action:close" size="xx-small" alternativeText="Delete"/>
+                                            <span class="slds-assistive-text">Cancel</span>
+                                        </button>
+                                        </aura:set>
+                                    </aura:if>
+                                </aura:set>
+                            </aura:if>
+                            
+                        </div>
+                    </td>
+                </tr>
+            </aura:iteration>
+            
+            <aura:iteration items="{!v.ContactFiles}" var="con">
+            
+                <lightning:layout horizontalAlign="spread">
+                    <lightning:layoutItem>
+                        <div class="slds-m-right_xxx-small" style="font-size: 13px;">
+                            <b><lightning:formattedText value="{#con.con.Name}"/>&nbsp;
+                                </b>
+                        </div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem>
+                        <lightning:layout class="slds-wrap" horizontalAlign="spread" multipleRows="true">
+                            <lightning:layoutItem>
+                                <lightning:layout verticalAlign="end">
+                                    <lightning:layoutItem>
+                                        <lightning:button variant="base" iconName="utility:new_window" iconPosition="right" label="Details" value="{#con.con.Id}"/>
+                                    </lightning:layoutItem>
+                                </lightning:layout>
+                            </lightning:layoutItem>
+                        </lightning:layout>
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </aura:iteration>
+            
+            
+        </tbody>
+    </table>
+        
+        
+        <!--   
+        <input type="file" class="file" aura:id="file" />
+        <ui:button label="Save" press="{!c.save}"/>
+        
+        <div aura:id="uploading" class="notUploading">
+            <img src="/resource/paura__images/loading-gray.gif" alt="uploading" class="small-spinner" /> Uploading...
+    	</div>
+    -->	
+        <br/>
+        <button onclick="{!c.createNewContact}" class="slds-button slds-button_brand ">
+            <lightning:icon class="white" iconName="utility:add" size="xx-small" alternativeText="Attach"/>
+            <span class="slds-text-body_regular"> New Custom Attachment</span>
+        </button>
+        <button class="slds-button slds-button_brand">Edit All</button>
+        
+    </div>
+    <iframe src="{!'https://shivaslightningplayground-dev-ed.my.salesforce.com/apex/VFChatterFile'}" width="100%" height="300px;" frameBorder="0"/>
+</aura:component>
